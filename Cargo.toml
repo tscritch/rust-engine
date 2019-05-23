@@ -1,0 +1,9 @@
+[package]
+name = "rust-engine"
+version = "0.1.0"
+authors = ["Tad Scritchfield <tscritchfield@digitalairstrike.com>"]
+edition = "2018"
+
+[dependencies.sdl2]
+version = "0.32.2"
+#features = ["bundled", "static-link"]
