@@ -5,8 +5,11 @@ authors = ["Tad Scritchfield <tscritchfield@digitalairstrike.com>"]
 edition = "2018"
 
 [dependencies]
-gl = "0.12.0"
+gl = { path = "lib/gl" }
 
 [dependencies.sdl2]
 version = "0.32.2"
 #features = ["bundled", "static-link"]
+
+[features]
+gl_debug = ["gl/debug"]
