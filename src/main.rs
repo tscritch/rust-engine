@@ -4,8 +4,13 @@ extern crate gl;
 use std::os::raw::{c_int, c_void, c_uint};
 
 pub mod render_gl;
+pub mod resources;
+
+use crate::resources::Resources;
+use std::path::Path;
 
 fn main() {
+    let res = Resources::from_relative_exe_path(Path::new("assets")).unwrap();
     let sdl = sdl2::init().unwrap();
     let video_subsystem = sdl.video().unwrap();
 
@@ -17,6 +22,7 @@ fn main() {
     let window = video_subsystem
         .window("Rengine", 600, 400)
         .opengl()
+//        .resizable()
 //        .borderless()
         .build()
         .unwrap();
@@ -32,18 +38,8 @@ fn main() {
         gl.ClearColor(0.3, 0.3, 0.5, 1.0);
     }
 
-    use std::ffi::CString;
-
-    let vert_shader = render_gl::Shader::from_vert_source(
-        &gl, &CString::new(include_str!("triangle.vert")).unwrap()
-    ).unwrap();
-
-    let frag_shader = render_gl::Shader::from_frag_source(
-        &gl, &CString::new(include_str!("triangle.frag")).unwrap()
-    ).unwrap();
-
-    let shader_program = render_gl::Program::from_shaders(
-        &gl, &[vert_shader, frag_shader]
+    let shader_program = render_gl::Program::from_res(
+        &gl, &res, "shaders/triangle"
     ).unwrap();
 
     shader_program.set_used();
